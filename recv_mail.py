@@ -35,14 +35,8 @@ class RecvMail:
         return len(self.mails_list)
     #enddef
 
-    def print_classinfo(self):
-        print("Employee.__doc__:", RecvMail.__doc__)
-        print("Employee.__name__:", RecvMail.__name__)
-        print("Employee.__module__:", RecvMail.__module__)
-        print("Employee.__bases__:", RecvMail.__bases__)
-        print("Employee.__dict__:", RecvMail.__dict__)
-
     def get_one_mail(self, index):
+        # 从邮箱中获取指定编号的邮件message
         resp, lines, octets = self.pop_conn.retr(index)
         message = email.message_from_bytes(b'\r\n'.join(lines))
         #print("%05d %s\t %s\t %s" % (index, mail_date, mail_from, mail_subject))
@@ -50,7 +44,7 @@ class RecvMail:
     #enddef
 
     def get_decode_subject(self, message):
-        # 对原始base64文本进行解码，得到文本串及文本编码
+        # 从message中获取邮件标题，并解码后返回
         subject = email.header.decode_header(message.get("subject"))
         mail_subject = subject[0][0]
         subcode = subject[0][1]
@@ -63,10 +57,12 @@ class RecvMail:
     #enddef
 
     def get_astime_beijing(self, message):
+        # 从message中获取邮件接收时间，并转换为北京时间返回
         return email.utils.parsedate_to_datetime(message.get("date")).astimezone(datetime.timezone(datetime.timedelta(hours=8)))
     #enddef
 
     def get_parsed_fromaddr(self, message):
+        # 从message中获取邮件的发件人信息并返回
         mail_from = message.get("from")
         mail_from = email.utils.parseaddr(mail_from)
         mail_from = mail_from[0] if len(mail_from) < 2 else mail_from[1]
