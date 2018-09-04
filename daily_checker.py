@@ -33,14 +33,10 @@ class DailyInfo:
 class DailySumbitInfoChecker:
     def __init__(self):
         self.dict_addr = {}
-        self.init_dict_addr()
         self.matching_str = "日报"
 
-    def init_dict_addr(self):
-        # 对待检查的发件人字典进行初始化，此处根据时间情况调整
-        self.dict_addr["test1@test.com"]   = DailyInfo("test1",   "test1@test.com")
-        self.dict_addr["test2@test.com"]   = DailyInfo("test2",   "test2@test.com")
-        self.dict_addr["test3@test.com"]   = DailyInfo("test3",   "test3@test.com")
+    def init_dict_addr(self, dict_addr):
+        self.dict_addr = dict_addr
 
     def _find_mid_index(self, find_date, recv_instanse, list_len):
         # 根据准备检查的日报日期，快速查找到指定日期的邮件位置。此处默认平均每天的邮件量在50封
