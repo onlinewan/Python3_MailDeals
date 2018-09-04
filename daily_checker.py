@@ -5,6 +5,10 @@ import email
 import poplib
 import datetime
 
+import recv_mail
+from recv_mail import RecvMail
+import send_mail
+from send_mail import SendMail
 
 class DailyInfo:
     def __init__(self, name="", mail="", mail_subject="", mail_date="", have=False):
